@@ -11,6 +11,11 @@ import MapKit
 import CoreData
 
 extension MKMapView {
+    
+    /*
+     MARK: get zoom about for MapView
+    */
+    
     func topCenterCoordinate() -> CLLocationCoordinate2D {
         return self.convert(CGPoint(x: self.frame.size.width / 2.0, y: 0), toCoordinateFrom: self)
     }
@@ -69,6 +74,7 @@ class MapViewController: UIViewController,MKMapViewDelegate{
         
         do {
             let savedPins = try managedContext.fetch(fetchRequest)
+            // prevent re-adding pins to the map
             if mapView.annotations.count < savedPins.count {
                 for pin in savedPins{
                     let long = pin.value(forKeyPath: "longitude") as? Double

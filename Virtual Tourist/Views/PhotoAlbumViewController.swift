@@ -19,6 +19,10 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDataSource, UI
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var newColl: UIButton!
     
+    /*
+     MARK: IBAction
+    */
+    
     // disimsses the delegate
     @IBAction func backToMap(_ sender: Any) {
         dismiss(animated: true, completion: nil)
@@ -39,7 +43,9 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDataSource, UI
     var urlList = [URL]()
     
     
-    
+    /*
+     MARK:viewDidLoad
+    */
     override func viewDidLoad() {
         mapView.delegate = self
         // allows for the reload of collection cells
@@ -85,7 +91,7 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDataSource, UI
     
     
     /**
-     Build Collection View
+     MARK:Collection View
      
     **/
     
@@ -146,6 +152,11 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDataSource, UI
         
         
     }
+    
+    /*
+     MARK: save
+     save a new collection when assotated button is pressed
+    */
     func save(){
         guard let appDelegate =
             UIApplication.shared.delegate as? AppDelegate else {
@@ -159,6 +170,11 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDataSource, UI
             error.alert(with: self)
         }
     }
+    
+    /*
+     MARK:photoForCell
+     gets pictures for each photo related to the pin
+    */
     
     func photoForCell(imageUrl:URL,cell:MyCollectionViewCell) -> Void{
         // app delegate for saving
@@ -231,8 +247,9 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDataSource, UI
         }
     }
     
-    
-
+    /*
+     MARK: showNewCollection
+    */
     
     func showNewCollection() -> Void{
 
@@ -247,7 +264,6 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDataSource, UI
         let lat = imagesForLocation?.latitude
         
         // build new PIN url
-
         let geoSearchUrl:URL = buildUrl(lat:lat!, long:long!, pageNumber:randomInt).url!
         
         // appDelegate
@@ -258,9 +274,7 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDataSource, UI
         let managedContext = appDelegate.persistentContainer.viewContext
         
         // make request for all photoURL related to that pin
-        // (NEW PIN = OLD PIN + 1 page)
         get(url:geoSearchUrl){ (output,response,error) in
-            // check output
             if output != nil{
                 do {
                     // decode result has codable struct
@@ -270,16 +284,12 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDataSource, UI
                         self.urlList.removeAll()
                         // loop through all photos realted to new pin
                         for urlParts in decodedPins.photos.photo{
-                            // build out each photo url
                             let myurl:URL = buildImageUrlV2(server: urlParts.server, id: urlParts.id, secret: urlParts.secret, farm: urlParts.farm).url!
                             // make new photo
                             let photo = Photo(context: managedContext)
-                            
-                            // set photo with newly create url
                             photo.photoUrl = myurl
                             photo.pinUrl = geoSearchUrl
                             // add relation from new Photo to old pin
-                            // CHECK THIS
                             self.imagesForLocation!.addToTooPhoto(photo)
                             // append new url to urlList
                             self.urlList.append(myurl)
@@ -298,7 +308,8 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDataSource, UI
                     error.alert(with: self)
                 }
             }else{
-               print ("NO PIC")
+                // if request timesout
+                error!.alert(with: self)
             }
         }
     }

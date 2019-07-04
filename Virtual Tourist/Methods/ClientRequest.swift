@@ -23,7 +23,7 @@ func jsonDecoder<T : Codable>(data:Data,type:T.Type, completionHandler:@escaping
 
 
 public func get(url:URL,completionBlock:  @escaping  (Data?,URLResponse?,Error?)  -> Void)  -> Void {
-    var request = URLRequest(url:url,timeoutInterval: 1.0)
+    var request = URLRequest(url:url,timeoutInterval: 50.0)
     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
     let session = URLSession.shared
     let task = session.dataTask(with: request) {data,response,error in

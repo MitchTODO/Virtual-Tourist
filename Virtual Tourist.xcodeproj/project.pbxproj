@@ -50,18 +50,11 @@
 		FE00C1AE22C2F567001319D2 /* Methods */ = {
 			isa = PBXGroup;
 			children = (
+				FE00C1B322C31B95001319D2 /* ErrorHandling.swift */,
 				FE00C1AF22C2F583001319D2 /* Endpoints.swift */,
 				FE00C1B122C2F5A9001319D2 /* ClientRequest.swift */,
 			);
 			path = Methods;
-			sourceTree = "<group>";
-		};
-		FE00C1B522C31FAF001319D2 /* Errorhandle */ = {
-			isa = PBXGroup;
-			children = (
-				FE00C1B322C31B95001319D2 /* ErrorHandling.swift */,
-			);
-			path = Errorhandle;
 			sourceTree = "<group>";
 		};
 		FE0124B822C2D82000E45877 /* Storyboard */ = {
@@ -93,7 +86,6 @@
 			isa = PBXGroup;
 			children = (
 				FE0124B822C2D82000E45877 /* Storyboard */,
-				FE00C1B522C31FAF001319D2 /* Errorhandle */,
 				FE00C1AE22C2F567001319D2 /* Methods */,
 				FE83ABAF22C69CDF001BA592 /* CollectionCell */,
 				FE4C1CF522C1B19E007CF812 /* Views */,

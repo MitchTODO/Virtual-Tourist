@@ -166,7 +166,7 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDataSource, UI
             UIApplication.shared.delegate as? AppDelegate else {
                 return
         }
-        // manages requests from CoreData
+        
         let managedContext = appDelegate.persistentContainer.viewContext
         // make a request for photo
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Photo")

@@ -1,12 +1,9 @@
 ## Virtual-Tourist
 
-![alt text](./readmePic/v1.png "LSLS")
-![alt text](./readmePic/v2.png "LSLS")
-![alt text](./readmePic/v3.png "LSLS")
 <div>
-  <img src="./readmePic/v1.png" alt="pic" width="420">
-  <img src="./readmePic/v1.png" alt="pic" width="420">
-  <img src="./readmePic/v1.png" alt="pic" width="420">
+  <img src="./readmePic/v1.png" alt="pic" width="220">
+  <img src="./readmePic/v2.png" alt="pic" width="220">
+  <img src="./readmePic/v3.png" alt="pic" width="220">
 </div>
 
 ### Description

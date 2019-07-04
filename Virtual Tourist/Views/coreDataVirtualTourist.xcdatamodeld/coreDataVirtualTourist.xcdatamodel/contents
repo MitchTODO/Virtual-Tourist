@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.99" systemVersion="18F132" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Photo" representedClassName="Photo" syncable="YES" codeGenerationType="class">
+        <attribute name="image" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="photoUrl" optional="YES" attributeType="URI" syncable="YES"/>
+        <attribute name="pinUrl" optional="YES" attributeType="URI" syncable="YES"/>
+        <relationship name="toPin" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Pin" inverseName="tooPhoto" inverseEntity="Pin" syncable="YES"/>
+    </entity>
+    <entity name="Pin" representedClassName="Pin" syncable="YES" codeGenerationType="class">
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="maxPage" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="pinColor" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="URI" syncable="YES"/>
+        <relationship name="tooPhoto" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Photo" inverseName="toPin" inverseEntity="Photo" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Photo" positionX="-630.33203125" positionY="-1380.58984375" width="128" height="103"/>
+        <element name="Pin" positionX="-928.09375" positionY="-1368.828125" width="96.1328125" height="133"/>
+    </elements>
+</model>

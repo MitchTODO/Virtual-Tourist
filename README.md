@@ -1,8 +1,8 @@
 ## Virtual-Tourist
 
-![alt text](./readmePic/v1 "LSLS")
-![alt text](./readmePic/v2 "LSLS")
-![alt text](./readmePic/v3 "LSLS")
+![alt text](./readmePic/v1.png "LSLS")
+![alt text](./readmePic/v2.png "LSLS")
+![alt text](./readmePic/v3.png "LSLS")
 
 ### Description
 

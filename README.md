@@ -5,9 +5,11 @@
 A IOS app that will save geo-based Flickr pictures to your device using core-data.
 
 
-![alt text](/readmePic/v1 "LSLS")
-![alt text](/readmePic/v2 "LSLS")
-![alt text](/readmePic/v3 "LSLS")
+<div>	
+  <img src="./readmePic/v1.png" alt="pic" width="260">	
+  <img src="./readmePic/v2.png" alt="pic" width="260">	
+  <img src="./readmePic/v3.png" alt="pic" width="260">	
+</div>
 
 
 ### Architecture

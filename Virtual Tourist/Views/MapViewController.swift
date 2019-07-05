@@ -13,7 +13,7 @@ import CoreData
 extension MKMapView {
     
     /*
-     MARK: get zoom about for MapView
+     MARK: get zoom info for MapView
     */
     
     func topCenterCoordinate() -> CLLocationCoordinate2D {
@@ -71,11 +71,12 @@ class MapViewController: UIViewController,MKMapViewDelegate{
         }
         let managedContext = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Pin")
-        
+        // load all saved pins
         do {
             let savedPins = try managedContext.fetch(fetchRequest)
             // prevent re-adding pins to the map
             if mapView.annotations.count < savedPins.count {
+                // make annontation for each pin
                 for pin in savedPins{
                     let long = pin.value(forKeyPath: "longitude") as? Double
                     let lat = pin.value(forKeyPath:"Latitude") as? Double
@@ -102,6 +103,7 @@ class MapViewController: UIViewController,MKMapViewDelegate{
         let regionRadius = defaults.double(forKey:"Distance")
         let lat = defaults.double(forKey: "Lat")
         let long = defaults.double(forKey: "Long")
+        // load last seen location of map
         if (lat != 0.0 && long != 0.0){
             let coordiantes = CLLocationCoordinate2D(latitude:lat  , longitude: long)
             let coordianteRegion = MKCoordinateRegion(center: coordiantes, latitudinalMeters: regionRadius,longitudinalMeters: regionRadius)
@@ -120,6 +122,7 @@ class MapViewController: UIViewController,MKMapViewDelegate{
         let reuseId = "pin"
         var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView
         if pinView == nil {
+            // set up annontation
             pinView = MKPinAnnotationView(annotation:annotation, reuseIdentifier: reuseId)
             pinView!.canShowCallout = true
             pinView!.animatesDrop = true
@@ -134,7 +137,6 @@ class MapViewController: UIViewController,MKMapViewDelegate{
                 UIApplication.shared.delegate as! AppDelegate
             let managedContext =
                 appDelegate.persistentContainer.viewContext
-            
             let fetchRequest =
                 NSFetchRequest<NSManagedObject>(entityName: "Pin")
             fetchRequest.predicate = NSPredicate(format:"longitude==\(long)")
@@ -144,14 +146,15 @@ class MapViewController: UIViewController,MKMapViewDelegate{
                 let savedPins = try managedContext.fetch(fetchRequest)
                 
                 if savedPins.count == 0{
-                    
+                    // if no picture infomation exist try request again
                     fullSearchForGeoBasedImages(Long:(pinView?.annotation?.coordinate.longitude)!, Lat:(pinView?.annotation?.coordinate.latitude)!, pin: pinView!, shouldSave: true)
                 }else{
-                    
+                    // red pin == no pic exist for location
                     let save = savedPins[0] as! Pin
                     if save.pinColor == "red"{
                         pinView!.pinTintColor = UIColor.red
                     }
+                    // green pin == pic exist
                     if save.pinColor == "green"{
                         pinView!.pinTintColor = UIColor(red:0.20, green:0.74, blue:0.28, alpha:1.0)
                     }
@@ -188,9 +191,10 @@ class MapViewController: UIViewController,MKMapViewDelegate{
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         let pin = view.annotation as! MKPointAnnotation
         if removePinMode == false {
-            
+            // segue user to photoAlbumViewController
             let point = view as! MKPinAnnotationView
             
+            // load pin for segue sender
             let appDelegate =
                 UIApplication.shared.delegate as! AppDelegate
             let managedContext =
@@ -209,6 +213,7 @@ class MapViewController: UIViewController,MKMapViewDelegate{
                 let savedPins = try managedContext.fetch(fetchRequest)
                 if savedPins.count != 0{
                     let save = savedPins[0] as! Pin
+                    // only segue green pins
                     if save.pinColor == "green"{
                         performSegue(withIdentifier:"flickrSeque", sender: save)
                     }else{
@@ -225,7 +230,7 @@ class MapViewController: UIViewController,MKMapViewDelegate{
             mapView.deselectAnnotation(pin, animated: false)
             
         }else{
-            
+            // deletes annotation and pin from coredata
             guard let appDelegate =
                 UIApplication.shared.delegate as? AppDelegate else {
                     return
@@ -262,7 +267,7 @@ class MapViewController: UIViewController,MKMapViewDelegate{
     
     func fullSearchForGeoBasedImages(Long:Double, Lat:Double, pin:MKPinAnnotationView,shouldSave:Bool) -> Void{
         let geoSearchUrl:URL = buildUrl(lat:Lat, long:Long, pageNumber: 1).url!
-        
+        // get geo-based images for information for pin
         get(url:geoSearchUrl){ (output,response,error) in
             if output != nil{
                 do {

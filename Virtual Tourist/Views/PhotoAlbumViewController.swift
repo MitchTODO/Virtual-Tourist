@@ -198,7 +198,7 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDataSource, UI
             // a photo entity will alway have a realted url
            
             if addImageToDate.isEmpty{
-                print ("This should never be printed out")
+                
             }else{
                 //  as Photo entity
                 let theUrl = addImageToDate[0] as? Photo
